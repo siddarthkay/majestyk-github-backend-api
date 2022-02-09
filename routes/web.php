@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use GrahamCampbell\GitHub\Facades\GitHub;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/',function (){
     return view('welcome');
+});
+
+Route::get('/getUser/{username}', function ($username) {
+    $response =  Github::search()->users($username);
+    dd($response);
+    return $response;
+});
+
+Route::get('/getRepo/{username}/{repo}', function ($username,$repo) {
+    $response =  Github::search()->repositories("user:$username $repo in:name");
+    dd($response);
+    return $response;
 });
